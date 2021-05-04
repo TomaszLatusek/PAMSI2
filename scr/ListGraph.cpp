@@ -74,22 +74,6 @@ void ListGraph::print()
     }
 }
 
-// int ListGraph::find(int i)
-// {
-//     while (parent[i] != i)
-//     {
-//         i = parent[i];
-//     }
-//     return i;
-// }
-
-// void ListGraph::union1(int i, int j)
-// {
-//     int a = find(i);
-//     int b = find(j);
-//     parent[a] = b;
-// }
-
 int ListGraph::kruskal()
 {
     int mst = 0;
@@ -176,45 +160,12 @@ int ListGraph::kruskal2()
     int m = 0, n = 0;
     node *x;
 
-    // for (int i = 0; i < verticesCount; i++)
-    // {
-    //     x = list[i];
-    //     while (x)
-    //     {
-    //         edgeList[m] = x->edge;
-    //         m++;
-    //         // for (int j = 0; j < edgesCount; j++)
-    //         // {
-    //         //     //std::cout << edgeList[i];
-
-    //         //     if (x->edge == edgeList[j])
-    //         //     {
-    //         //         continue;
-    //         //     }
-    //         //     edgeList[m] = x->edge;
-    //         //     m++;
-    //         // }
-    //         x = x->next;
-    //     }
-    // }
-
     std::sort(edgeList, edgeList + edgesCount, [](Edge *a, Edge *b) { return a->weight < b->weight; });
-
-    // for (int i = 0; i < 6; i++)
-    // {
-    //     std::cout << edgeList[i]->source << " " << edgeList[i]->destination << " " << edgeList[i]->weight << std::endl;
-    // }
 
     int mst = 0;
     int uRep, vRep;
     for (int i = 0; i < edgesCount; i++)
     {
-        // if (!parent[edgeList[i]->source] || !parent[edgeList[i]->destination])
-        // {
-        //     parent[edgeList[i]->source] = 1;
-        //     parent[edgeList[i]->destination] = 1;
-        //     mst += edgeList[i]->weight;
-        // }
         uRep = find(edgeList[i]->source);
         vRep = find(edgeList[i]->destination);
 
@@ -226,4 +177,9 @@ int ListGraph::kruskal2()
     }
 
     return mst;
+}
+
+void ListGraph::sort()
+{
+    std::sort(edgeList, edgeList + edgesCount, [](Edge *a, Edge *b) { return a->weight < b->weight; });
 }

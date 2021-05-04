@@ -15,6 +15,7 @@ public:
     void addEdge(int src, int dst, int weight);
     bool hasEdge(int src, int dst);
     void print();
+    void sort();
     int kruskal();
     int kruskal2();
     int prim();

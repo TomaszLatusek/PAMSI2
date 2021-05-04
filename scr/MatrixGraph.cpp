@@ -8,9 +8,6 @@ MatrixGraph::MatrixGraph(int vertCount, int edgCount)
     edgesCount = 0;
     parent = new int[verticesCount];
 
-    // key = new int[verticesCount];
-    // mstSet = new bool[verticesCount];
-
     matrix = new Edge **[verticesCount];
     edgeList = new Edge *[edgCount];
 
@@ -22,22 +19,6 @@ MatrixGraph::MatrixGraph(int vertCount, int edgCount)
             matrix[i][j] = nullptr;
         }
     }
-    // verticesCount = verticesCount;
-    // edgesCount = (verticesCount * (verticesCount - 1) * density) / 200;
-
-    // matrix = new Edge **[verticesCount];
-    // if (density == 100)
-    // {
-    //     for (int i = 0; i < verticesCount; i++)
-    //     {
-    //         matrix[i] = new Edge *[verticesCount];
-    //         for (int j = 0; j < verticesCount; j++)
-    //         {
-    //             int weight = rand() % 25 + verticesCount - 1;
-    //             this->addEdge(i, j, weight);
-    //         }
-    //     }
-    // }
 }
 
 MatrixGraph::~MatrixGraph()
@@ -47,10 +28,8 @@ MatrixGraph::~MatrixGraph()
         for (int j = 0; j < this->verticesCount; ++j)
         {
             delete matrix[i][j];
-            // this->adjacencyMatrix[i][j] = nullptr;
         }
         delete[] matrix[i];
-        // this->adjacencyMatrix[i] = nullptr;
     }
     delete[] matrix;
 }
@@ -62,14 +41,14 @@ void MatrixGraph::addEdge(int src, int dst, int weight)
     {
         Edge *e1 = new Edge(src, dst, weight);
         matrix[src][dst] = e1;
-        e1 = nullptr;
 
         Edge *e2 = new Edge(dst, src, weight);
         matrix[dst][src] = e2;
         e2 = nullptr;
-    }
 
-    edgesCount++;
+        edgeList[edgesCount++] = e1;
+        e1 = nullptr;
+    }
 }
 
 bool MatrixGraph::hasEdge(int src, int dst)
@@ -95,22 +74,6 @@ void MatrixGraph::print()
         std::cout << std::endl;
     }
 }
-
-// int MatrixGraph::find(int i)
-// {
-//     while (parent[i] != i)
-//     {
-//         i = parent[i];
-//     }
-//     return i;
-// }
-
-// void MatrixGraph::union1(int i, int j)
-// {
-//     int a = find(i);
-//     int b = find(j);
-//     parent[a] = b;
-// }
 
 int MatrixGraph::kruskal()
 {
@@ -146,17 +109,6 @@ int MatrixGraph::kruskal()
     }
     return mst;
 }
-
-// int MatrixGraph::minKey(int key[], bool mstSet[])
-// {
-//     int min = 1000, min_index;
-
-//     for (int v = 0; v < verticesCount; v++)
-//         if (mstSet[v] == false && key[v] < min)
-//             min = key[v], min_index = v;
-
-//     return min_index;
-// }
 
 int MatrixGraph::prim()
 {
@@ -217,21 +169,10 @@ int MatrixGraph::kruskal2()
 
     std::sort(edgeList, edgeList + edgesCount, [](Edge *a, Edge *b) { return a->weight < b->weight; });
 
-    // for (int i = 0; i < edgesCount; i++)
-    // {
-    //     std::cout << edgeList[i]->weight << " " << edgeList[i]->source << " " << edgeList[i]->destination << std::endl;
-    // }
-
     int mst = 0;
     int uRep, vRep;
     for (int i = 0; i < edgesCount; i++)
     {
-        // if (!parent[edgeList[i]->source] || !parent[edgeList[i]->destination])
-        // {
-        //     parent[edgeList[i]->source] = 1;
-        //     parent[edgeList[i]->destination] = 1;
-        //     mst += edgeList[i]->weight;
-        // }
         uRep = find(edgeList[i]->source);
         vRep = find(edgeList[i]->destination);
 
@@ -245,7 +186,7 @@ int MatrixGraph::kruskal2()
     return mst;
 }
 
-// int MatrixGraph::prim2()
-// {
-
-// }
+void MatrixGraph::sort()
+{
+    std::sort(edgeList, edgeList + edgesCount, [](Edge *a, Edge *b) { return a->weight < b->weight; });
+}
