@@ -1,10 +1,13 @@
 #include "../inc/ListGraph.hh"
 #include <iostream>
+#include <algorithm>
 
-ListGraph::ListGraph(int vertCount)
+ListGraph::ListGraph(int vertCount, int edgCount)
 {
     verticesCount = vertCount;
     edgesCount = 0;
+    edgeList = new Edge *[edgCount];
+
     parent = new int[verticesCount];
 
     list = new node *[verticesCount];
@@ -33,8 +36,12 @@ ListGraph::~ListGraph()
 
 void ListGraph::addEdge(int src, int dst, int weight)
 {
-    list[src] = new node{dst, weight, list[src]};
-    list[dst] = new node{src, weight, list[dst]};
+    Edge *e = new Edge(src, dst, weight);
+    list[src] = new node{dst, weight, e, list[src]};
+    list[dst] = new node{src, weight, e, list[dst]};
+
+    edgeList[edgesCount++] = e;
+    e = nullptr;
 }
 
 bool ListGraph::hasEdge(int src, int dst)
@@ -102,11 +109,11 @@ int ListGraph::kruskal()
             x = list[i];
             while (x)
             {
-                if (find(i) != find(x->index) && x->weight < min)
+                if (find(i) != find(x->edge->source) && x->edge->weight < min)
                 {
-                    min = x->weight;
+                    min = x->edge->weight;
                     a = i;
-                    b = x->index;
+                    b = x->edge->source;
                 }
                 x = x->next;
             }
@@ -144,7 +151,7 @@ int ListGraph::prim()
 
         while (x)
         {
-            if (mstSet[x->index] == false && x->weight < key[x->index])
+            if (mstSet[x->index] == false && x->edge->weight < key[x->index])
             {
                 parent[x->index] = u;
                 key[x->index] = x->weight;
@@ -156,5 +163,67 @@ int ListGraph::prim()
     {
         mst += key[i];
     }
+    return mst;
+}
+
+int ListGraph::kruskal2()
+{
+    for (int i = 0; i < verticesCount; i++)
+    {
+        parent[i] = i;
+    }
+
+    int m = 0, n = 0;
+    node *x;
+
+    // for (int i = 0; i < verticesCount; i++)
+    // {
+    //     x = list[i];
+    //     while (x)
+    //     {
+    //         edgeList[m] = x->edge;
+    //         m++;
+    //         // for (int j = 0; j < edgesCount; j++)
+    //         // {
+    //         //     //std::cout << edgeList[i];
+
+    //         //     if (x->edge == edgeList[j])
+    //         //     {
+    //         //         continue;
+    //         //     }
+    //         //     edgeList[m] = x->edge;
+    //         //     m++;
+    //         // }
+    //         x = x->next;
+    //     }
+    // }
+
+    std::sort(edgeList, edgeList + edgesCount, [](Edge *a, Edge *b) { return a->weight < b->weight; });
+
+    // for (int i = 0; i < 6; i++)
+    // {
+    //     std::cout << edgeList[i]->source << " " << edgeList[i]->destination << " " << edgeList[i]->weight << std::endl;
+    // }
+
+    int mst = 0;
+    int uRep, vRep;
+    for (int i = 0; i < edgesCount; i++)
+    {
+        // if (!parent[edgeList[i]->source] || !parent[edgeList[i]->destination])
+        // {
+        //     parent[edgeList[i]->source] = 1;
+        //     parent[edgeList[i]->destination] = 1;
+        //     mst += edgeList[i]->weight;
+        // }
+        uRep = find(edgeList[i]->source);
+        vRep = find(edgeList[i]->destination);
+
+        if (uRep != vRep)
+        {
+            mst += edgeList[i]->weight;
+            union1(uRep, vRep);
+        }
+    }
+
     return mst;
 }

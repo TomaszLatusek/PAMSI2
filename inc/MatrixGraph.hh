@@ -10,7 +10,7 @@ class MatrixGraph : Graph
     Edge **edgeList;
 
 public:
-    MatrixGraph(int verticesCount /* , int density */);
+    MatrixGraph(int verticesCount, int edgCount );
     ~MatrixGraph();
     void addEdge(int src, int dst, int weight);
     bool hasEdge(int src, int dst);

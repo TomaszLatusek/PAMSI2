@@ -31,7 +31,7 @@ int main()
     int graphSize[] = {10, 50, 100, 150, 200};
     float graphDensity[] = {25, 50, 75, 100};
 
-    int testCount = 2;
+    int testCount = 10;
     int sizes = sizeof(graphSize) / sizeof(graphSize[0]);
     int densities = sizeof(graphDensity) / sizeof(graphDensity[0]);
 
@@ -47,13 +47,14 @@ int main()
 
     int m = 0;
 
-    // MatrixGraph *graf = Graph::generateRandom<MatrixGraph>(4, 100);
+    // ListGraph *graf = Graph::generateRandom<ListGraph>(10, 50);
     // graf->print();
 
     // auto start1M = std::chrono::high_resolution_clock::now();
     // auto stop1M = std::chrono::high_resolution_clock::now();
     // int duration1M = std::chrono::duration_cast<std::chrono::microseconds>(stop1M - start1M).count();
-    // std::cout << graf->kruskal2();
+    // std::cout << graf->prim() << std::endl;
+    // std::cout << graf->kruskal2() << std::endl;
 
     for (int i = 0; i < sizes; i++)
     {

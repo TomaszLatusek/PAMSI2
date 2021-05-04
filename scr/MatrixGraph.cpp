@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
-MatrixGraph::MatrixGraph(int vertCount /* , int density */)
+MatrixGraph::MatrixGraph(int vertCount, int edgCount)
 {
     verticesCount = vertCount;
     edgesCount = 0;
@@ -12,7 +12,7 @@ MatrixGraph::MatrixGraph(int vertCount /* , int density */)
     // mstSet = new bool[verticesCount];
 
     matrix = new Edge **[verticesCount];
-    edgeList = new Edge *[edgesCount];
+    edgeList = new Edge *[edgCount];
 
     for (int i = 0; i < verticesCount; i++)
     {
@@ -53,12 +53,6 @@ MatrixGraph::~MatrixGraph()
         // this->adjacencyMatrix[i] = nullptr;
     }
     delete[] matrix;
-
-    // for (int i = 0; i < edgesCount; i++)
-    // {
-    //     delete edgeList[i];
-    // }
-    // delete[] edgeList;
 }
 
 void MatrixGraph::addEdge(int src, int dst, int weight)
@@ -229,7 +223,7 @@ int MatrixGraph::kruskal2()
     // }
 
     int mst = 0;
-    int x, uRep, vRep;
+    int uRep, vRep;
     for (int i = 0; i < edgesCount; i++)
     {
         // if (!parent[edgeList[i]->source] || !parent[edgeList[i]->destination])

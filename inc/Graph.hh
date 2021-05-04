@@ -14,17 +14,17 @@ public:
 
     int find(int i)
     {
-        while (parent[i] != i)
-        {
-            i = parent[i];
-        }
+          if (i == parent[i])
         return i;
+    else
+        // Else if i is not the parent of itself
+        // Then i is not the representative of his set,
+        // so we recursively call Find on its parent
+        return find(parent[i]);
     }
     void union1(int i, int j)
     {
-        int a = find(i);
-        int b = find(j);
-        parent[a] = b;
+        parent[i] = parent[j];
     }
     int minKey(int key[], bool mstSet[])
     {
@@ -44,7 +44,7 @@ public:
     static T *generateRandom(int vertCount, int density)
     {
         int edgCount = (vertCount * (vertCount - 1) * density) / 200;
-        T *graph = new T(vertCount);
+        T *graph = new T(vertCount, edgCount);
         if (density == 100)
         {
             for (int i = 0; i < vertCount; ++i)
