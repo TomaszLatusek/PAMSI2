@@ -8,10 +8,9 @@ struct node
 {
     int index;
     int weight;
-    Edge *edge;
     node *next = nullptr;
 
-    node(int i, int w, Edge *e, node *n = nullptr) : index(i), weight(w), edge(e), next(n) {}
+    node(int i, int w, node *n = nullptr) : index(i), weight(w), next(n) {}
 };
 
 class ListGraph : Graph
@@ -28,6 +27,5 @@ public:
     void print();
     void sort();
     int kruskal();
-    int kruskal2();
     int prim();
 };

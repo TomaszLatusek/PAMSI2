@@ -6,10 +6,12 @@ MatrixGraph::MatrixGraph(int vertCount, int edgCount)
 {
     verticesCount = vertCount;
     edgesCount = 0;
-    parent = new int[verticesCount];
 
+    parent = new int[verticesCount];
     matrix = new Edge **[verticesCount];
     edgeList = new Edge *[edgCount];
+    key = new int[verticesCount];
+    mstSet = new bool[verticesCount];
 
     for (int i = 0; i < verticesCount; i++)
     {
@@ -75,47 +77,10 @@ void MatrixGraph::print()
     }
 }
 
-int MatrixGraph::kruskal()
-{
-    int mst = 0;
-
-    for (int i = 0; i < verticesCount; i++)
-    {
-        parent[i] = i;
-    }
-
-    int edgeCount = 0;
-    while (edgeCount < verticesCount - 1)
-    {
-        int min = 1000, a = -1, b = -1;
-        for (int i = 0; i < verticesCount; i++)
-        {
-            for (int j = i + 1; j < verticesCount; j++)
-            {
-                if (matrix[i][j])
-                {
-                    if (find(i) != find(j) && matrix[i][j]->weight < min)
-                    {
-                        min = matrix[i][j]->weight;
-                        a = i;
-                        b = j;
-                    }
-                }
-            }
-        }
-        union1(a, b);
-        mst += min;
-        edgeCount++;
-    }
-    return mst;
-}
 
 int MatrixGraph::prim()
 {
-    int *parent = new int[verticesCount];
-    int *key = new int[verticesCount];
-    bool *mstSet = new bool[verticesCount];
-    int mst = 0;
+    mst = 0;
 
     for (int i = 0; i < verticesCount; i++)
     {
@@ -147,29 +112,17 @@ int MatrixGraph::prim()
     return mst;
 }
 
-int MatrixGraph::kruskal2()
+int MatrixGraph::kruskal()
 {
+    mst = 0;
+
     for (int i = 0; i < verticesCount; i++)
     {
         parent[i] = i;
     }
 
-    int m = 0;
-    for (int i = 0; i < verticesCount; i++)
-    {
-        for (int j = i + 1; j < verticesCount; j++)
-        {
-            if (matrix[i][j])
-            {
-                edgeList[m] = matrix[i][j];
-                m++;
-            }
-        }
-    }
-
     std::sort(edgeList, edgeList + edgesCount, [](Edge *a, Edge *b) { return a->weight < b->weight; });
 
-    int mst = 0;
     int uRep, vRep;
     for (int i = 0; i < edgesCount; i++)
     {

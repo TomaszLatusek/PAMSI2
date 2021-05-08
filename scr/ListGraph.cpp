@@ -6,11 +6,13 @@ ListGraph::ListGraph(int vertCount, int edgCount)
 {
     verticesCount = vertCount;
     edgesCount = 0;
+
     edgeList = new Edge *[edgCount];
-
     parent = new int[verticesCount];
-
+    key = new int[verticesCount];
+    mstSet = new bool[verticesCount];
     list = new node *[verticesCount];
+
     for (int i = 0; i < verticesCount; i++)
     {
         list[i] = nullptr;
@@ -37,8 +39,8 @@ ListGraph::~ListGraph()
 void ListGraph::addEdge(int src, int dst, int weight)
 {
     Edge *e = new Edge(src, dst, weight);
-    list[src] = new node{dst, weight, e, list[src]};
-    list[dst] = new node{src, weight, e, list[dst]};
+    list[src] = new node{dst, weight, list[src]};
+    list[dst] = new node{src, weight, list[dst]};
 
     edgeList[edgesCount++] = e;
     e = nullptr;
@@ -74,47 +76,9 @@ void ListGraph::print()
     }
 }
 
-int ListGraph::kruskal()
-{
-    int mst = 0;
-
-    for (int i = 0; i < verticesCount; i++)
-    {
-        parent[i] = i;
-    }
-
-    int edgeCount = 0;
-    while (edgeCount < verticesCount - 1)
-    {
-        int min = 1000, a = -1, b = -1;
-        node *x;
-        for (int i = 0; i < verticesCount; i++)
-        {
-            x = list[i];
-            while (x)
-            {
-                if (find(i) != find(x->edge->source) && x->edge->weight < min)
-                {
-                    min = x->edge->weight;
-                    a = i;
-                    b = x->edge->source;
-                }
-                x = x->next;
-            }
-        }
-        union1(a, b);
-        mst += min;
-        edgeCount++;
-    }
-    return mst;
-}
-
 int ListGraph::prim()
 {
-    int *parent = new int[verticesCount];
-    int *key = new int[verticesCount];
-    bool *mstSet = new bool[verticesCount];
-    int mst = 0;
+    mst = 0;
 
     for (int i = 0; i < verticesCount; i++)
     {
@@ -135,7 +99,7 @@ int ListGraph::prim()
 
         while (x)
         {
-            if (mstSet[x->index] == false && x->edge->weight < key[x->index])
+            if (mstSet[x->index] == false && x->weight < key[x->index])
             {
                 parent[x->index] = u;
                 key[x->index] = x->weight;
@@ -150,15 +114,14 @@ int ListGraph::prim()
     return mst;
 }
 
-int ListGraph::kruskal2()
+int ListGraph::kruskal()
 {
+    mst = 0;
+    
     for (int i = 0; i < verticesCount; i++)
     {
         parent[i] = i;
     }
-
-    int m = 0, n = 0;
-    node *x;
 
     std::sort(edgeList, edgeList + edgesCount, [](Edge *a, Edge *b) { return a->weight < b->weight; });
 

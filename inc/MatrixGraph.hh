@@ -17,8 +17,5 @@ public:
     void print();
     void sort();
     int kruskal();
-    int kruskal2();
     int prim();
-    // int prim2();
-    // int getVert(){return verticesCount;};
 };
