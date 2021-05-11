@@ -46,11 +46,11 @@ int main()
 
     int m = 0;
 
-    // ListGraph *graf = Graph::generateRandom<ListGraph>(500, 100);
-    // MatrixGraph *graf2 = Graph::generateRandom<MatrixGraph>(500, 100);
+    // ListGraph *graf = Graph::generateRandom<ListGraph>(200, 75);
+    // MatrixGraph *graf2 = Graph::generateRandom<MatrixGraph>(200, 100);
 
-    // graf->sort();
-    // graf2->sort();
+    // //graf->sort();
+    // //graf2->sort();
 
     // auto start1M = std::chrono::high_resolution_clock::now();
     // std::cout << graf->kruskal() << std::endl;
@@ -58,7 +58,7 @@ int main()
     // int duration1M = std::chrono::duration_cast<std::chrono::microseconds>(stop1M - start1M).count();
 
     // auto start = std::chrono::high_resolution_clock::now();
-    // std::cout << graf2->kruskal() << std::endl;
+    // std::cout << graf->prim() << std::endl;
     // auto stop = std::chrono::high_resolution_clock::now();
     // int duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count();
 

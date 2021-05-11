@@ -1,0 +1,60 @@
+
+Vertices: 10 Density: 25
+1
+
+Vertices: 10 Density: 50
+2
+
+Vertices: 10 Density: 75
+2
+
+Vertices: 10 Density: 100
+2
+
+Vertices: 50 Density: 25
+36
+
+Vertices: 50 Density: 50
+48
+
+Vertices: 50 Density: 75
+45
+
+Vertices: 50 Density: 100
+34
+
+Vertices: 100 Density: 25
+131
+
+Vertices: 100 Density: 50
+175
+
+Vertices: 100 Density: 75
+145
+
+Vertices: 100 Density: 100
+111
+
+Vertices: 150 Density: 25
+261
+
+Vertices: 150 Density: 50
+319
+
+Vertices: 150 Density: 75
+279
+
+Vertices: 150 Density: 100
+203
+
+Vertices: 200 Density: 25
+433
+
+Vertices: 200 Density: 50
+535
+
+Vertices: 200 Density: 75
+460
+
+Vertices: 200 Density: 100
+357
